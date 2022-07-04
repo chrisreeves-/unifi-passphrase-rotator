@@ -5,7 +5,6 @@ Date: July 2022
 '''
 
 import requests
-import wifi_qrcode_generator
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import random
 import string
@@ -17,14 +16,17 @@ username = input("Please enter your username to access the Unifi controller: ")
 password = input("Please enter your password to access the Unifi controller: ")
 ssid = input("Please enter your SSID: ")
 
-# Password Generation
-password_length = 14
-lower = string.ascii_lowercase
-upper = string.ascii_uppercase
-num = string.digits
-all = lower + upper + num
-temp = random.sample(all,password_length)
-newpassword = "".join(temp)
+def random_password():
+    password_length = 14
+    lower = string.ascii_lowercase
+    upper = string.ascii_uppercase
+    num = string.digits
+    all = lower + upper + num
+    temp = random.sample(all,password_length)
+    password = "".join(temp)
+    return password
+
+newpassword = random_password()
 
 # Remove unverified HTTPS request warning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -75,4 +77,4 @@ try:
     qrcode = qr.wifi_qrcode(ssid, False, 'WPA', newpassword)
     qrcode.show()
 except:
-    print("Something went wrong")
+    print("Could not rotate password and generate QR code")
