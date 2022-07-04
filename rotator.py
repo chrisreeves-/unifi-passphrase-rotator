@@ -1,13 +1,27 @@
+'''
+Unifi Guest Wireless Password Rotator
+Author: Chris Reeves
+Date: July 2022
+'''
+
 import requests
-import json
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+import random
+import string
 
 ip = input("Please enter the Unifi controllers ip address: ")
 port = input("Please enter the Unifi controllers port numnber: ")
 username = input("Please enter your username to access the Unifi controller: ")
 password = input("Please enter your password to access the Unifi controller: ")
-SSID = input("Please enter the SSID you want to rotate: ")
-newpssword = "THISISTHENEWPASSWORD"
+
+# Password Generation
+password_length = 14
+lower = string.ascii_lowercase
+upper = string.ascii_uppercase
+num = string.digits
+all = lower + upper + num
+temp = random.sample(all,password_length)
+newpassword = "".join(temp)
 
 # Remove unverified HTTPS request warning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -44,4 +58,4 @@ for id in config_data["data"]:
 body = {'x_passphrase': f'{newpassword}'}
 response = session.put(f"https://{ip}:{port}/api/s/{sitename}/rest/wlanconf/{id}", headers=headers, json=body, verify=False)
 result_data = response.json()
-print(result_data)
+print("The new password is " + newpassword)
