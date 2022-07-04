@@ -13,7 +13,6 @@ newpssword = "THISISTHENEWPASSWORD"
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 # Auth Headers
-controller = f"https://{ip}:{port}/api/login"
 headers = {"Accept": "application/json",
            "Content-Type": "application/json"}
 body = {
@@ -22,18 +21,19 @@ body = {
 }
 
 # Auth to Unifi Controller
+url = f"https://{ip}:{port}/api/login"
 session = requests.Session()
-response = session.post(controller, headers=headers, data=json.dumps(body), verify=False)
+response = session.post(url, headers=headers, json=body, verify=False)
 auth_data = response.json()
 
-# Set Sites
+# Get Site Name
 url = f"https://{ip}:{port}/api/self/sites"
 response = session.get(url, headers=headers, verify=False)
 sites_data = response.json()
 for name in sites_data["data"]:
     sitename = (name["name"])
 
-# Get Config
+# Get Site ID
 url = f"https://{ip}:{port}/api/s/{sitename}/rest/wlanconf"
 response = session.get(url, headers=headers, verify=False)
 config_data = response.json()
@@ -41,9 +41,7 @@ for id in config_data["data"]:
     id = (id["_id"])
 
 # Change Password
-body = {
-    "x_passphrase": f"{newpassword}"
-}
-url = f"https://{ip}:{port}/api/s/{sitename}/rest/wlanconf/{id}"
-response = session.get(url, headers=headers, data=json.dumps(body), verify=False)
+body = {'x_passphrase': f'{newpassword}'}
+response = session.put(f"https://{ip}:{port}/api/s/{sitename}/rest/wlanconf/{id}", headers=headers, json=body, verify=False)
 result_data = response.json()
+print(result_data)
