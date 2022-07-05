@@ -15,13 +15,17 @@ This script is requesting infomation from the user running the script however ha
 ```shell
 https://github.com/chrisreeves-/unifi-passphrase-rotator.git
 ```
-2. Gather information about your Unfi controller
+2. Install Python packages
+```shell
+pip install -r requirements.txt
+```
+3. Gather information about your Unfi controller
    1. IP Address
    2. Port (_Usually 8443_)
    3. Username
    4. Password
-   5. THe name of the SSID
-3. Run the script
+   5. The name of the SSID
+4. Run the script
 ```shell
 python3 rotator.py
 ```
