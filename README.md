@@ -11,6 +11,8 @@ This script is requesting infomation from the user running the script however ha
 
 ## How To Use
 
+0. Get some friends
+
 1. Git clone repository
 ```shell
 git clone https://github.com/chrisreeves-/unifi-passphrase-rotator.git
