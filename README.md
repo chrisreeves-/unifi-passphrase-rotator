@@ -9,6 +9,16 @@ This simple script rotates Unifi controller WIFI passphrases and generates a QR 
 If you have a guest network that you would like to secure by rotating on a daily/weekly/monthly basis.
 This script is requesting infomation from the user running the script however hard-coded values can be set if it needs to be running in a schedule/cron.
 
+## Requirements
+
+1. A working internet connection
+
+2. A Unifi controller running on your local network and functioning correctly
+
+3. Credentials to access your Unifi controller
+
+4. Python 3 installed
+
 ## How To Use
 
 0. Get some friends
